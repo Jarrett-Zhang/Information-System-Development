@@ -43,7 +43,7 @@
 \begin{titlepage}
     \newgeometry{top=6cm}
     \begin{center}
-        \bfseries\Huge{信息设计实践}\\
+        \bfseries\Huge{项目计划书}\\
         \vspace{0.5cm}
         \bfseries\Large{基于SpringBoot\&Vue的在线考试系统}
         \vspace{5cm}
@@ -75,37 +75,43 @@
 \subsection{概述}
 在线考试系统是一种基于互联网的教育技术工具，旨在为学生、教师或培训机构提供便捷的考试和评估方式。该系统基于SpringBoot+Vue，结合了后端和前端的强大功能，提供了稳定、高效的用户体验。该系统的后端的SpringBoot框架具备快速开发和简化配置的特点，它实现了用户管理、考试管理、试卷管理和成绩管理等核心功能，同时集成了Spring Security来确保用户身份验证和权限管理的安全性。使用Spring Data JPA简化了对数据库的访问和操作，提高了开发效率。前端则采用了Vue.js框架，拥有响应式和组件化的特点，提供了流畅的用户界面和良好的交互体验。它实现了用户登录、考试列表、试卷详情、成绩查询等功能，利用Vue Router实现了页面路由，实现了单页面应用的效果，同时结合了Element UI等UI组件库来美化页面样式，并提供丰富的交互组件。数据交互方面，采用了RESTful API实现前后端的数据交互，实现了前后端分离的架构。前端通过HTTP请求向后端发送数据请求，后端处理请求并返回相应的数据，实现了前后端的数据交互和通信。系统的数据库部分使用关系型数据库来存储用户信息、试卷信息、考试成绩等数据，同时利用Spring Data JPA简化了对数据库的操作，提高了数据访问的效率和便捷性。
 
-\subsection{组内分工}
-\begin{center}
-\begin{tabular}{c|c|c}
-王紫菱 & 前端开发 & 及格\\
-胡翌晨 & 后端开发 & 及格\\
-张家瑞 & debug、文档编写 & 及格
-\end{tabular}
-\end{center}
+\subsection{代码托管}
+\href{https://github.com/Jarrett-Zhang/Information-System-Development}{https://github.com/Jarrett-Zhang/Information-System-Development}
 
-\subsection{工作进度}
+\subsection{小组分工}
 \begin{center}
 \begin{tabular}{c|c}
-2024.4.15 & 确定选题\\
-2024.5.1 & 需求分析\\
-2024.6.1 & 前端、后端编写完成\\
-2024.6.10 & 测试完成\\
-2024.6.15 & 文档编写完成
+胡翌晨 & 前/后端代码实现\\
+张家瑞 & 系统设计、文档编写、项目测试\\
+刁坤明 & SpringBoot开发\\
+文鑫 & Vue开发\\
+周书法 & UI/UX设计、项目测试\\
 \end{tabular}
 \end{center}
 
-\subsection{代码托管}
-\href{https://github.com/Jarrett-Zhang/Software-Design-Practice}{https://github.com/Jarrett-Zhang/Software-Design-Practice}
+\subsection{预期进度安排}
+\begin{center}
+\begin{tabular}{c|c}
+2024.6.18 & 确认选题\\
+2024.6.19 $\sim$ 2024.6.20 & 需求分析\\
+2024.6.21 $\sim$ 2024.6.23 & 系统设计\\
+2024.6.19 $\sim$ 2024.6.23 & 编写项目计划书\\
+2024.6.24 $\sim$ 2024.6.29 & 代码编写\\
+2024.6.30 $\sim$ 2024.7.1 & 项目测试\\
+2024.6.30 $\sim$ 2024.7.1 & 编写项目说明书
+\end{tabular}
+\end{center}
 
-\subsection{Demo Video}
-\href{https://www.bilibili.com/video/BV1L3V7eiESK}
-{https://www.bilibili.com/video/BV1L3V7eiESK}
 
 \section{需求分析}
 
-\subsection{用例模型}
+\subsection{用例图}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{use-case diagram.png}
+\end{figure}
 
+\subsection{用例模型}
 \begin{centering}
 \begin{longtable}{|c|m{11cm}<{\centering}|} \hline
 \textbf{用例编号与名称} & UC001:登录 \\ \hline
@@ -369,7 +375,19 @@ Controller-->>View:判断是否成功
 \end{comment}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.79\linewidth]{diagram.png}
+    \includegraphics[width=0.95\linewidth]{diagram.png}
+\end{figure}
+
+\subsection{包图}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{package diagram.png}
+\end{figure}
+
+\subsection{类图}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{class diagram.png}
 \end{figure}
 
 \subsection{操作契约}
@@ -461,190 +479,23 @@ Controller-->>View:判断是否成功
 
 \section{代码实现}
 
-\subsection{核心代码示例：登录}
+\subsection{拟采用的实现技术}
+\begin{itemize}
+    \item \textbf{后端开发}：SpringBoot是一个基于Java的全功能Web应用框架，采用SpringBoot可以快速创建可独立运行的生产级应用程序；SpringBoot简化了Spring框架的配置过程，可以快速搭建项目结构，提高开发效率
+    \item \textbf{前端开发}：Vue.js是一个渐进式JavaScript框架，用于构建前端应用；Vue.js提供了响应式数据绑定和可组合的视图组件，易于上手和扩展，可以配合多种开发工具和框架
+    \item \textbf{数据库}：MySQL可以作为考试系统的数据库，用于存储考试题目、用户信息、考试记录、成绩等数据；采用关系型数据库便于建立数据之间的关联关系，方便数据的查询和统计
+    \item \textbf{消息队列}：ActiveMQ可以实现系统各组件之间的异步通信，提高系统性能和可扩展性。
+    \item \textbf{安全认证}：OAuth可以实现第三方账号登录功能，为用户提供更方便的登录方式。
+    \item \textbf{API管理}：Apigee可以为在线考试系统提供API文档管理，方便开发人员快速接入和调用系统API
+    \item \textbf{缓存技术}：Redis可以用来缓存系统中频繁访问的数据，减少对数据库的访问，提高系统性能
+    \item \textbf{监控和日志}：Prometheus可以用来监控系统性能和日志管理，方便快速定位问题和系统优化
+\end{itemize}
 
-前端：
-\lstset{language=java}
-\begin{lstlisting}
-login() {
-  console.log("登录操作执行-------"); // 打印登录操作执行信息
 
-  // 发送登录请求
-  this.$axios({
-    url: `http://localhost:8080/login/`,
-    method: 'post',
-    data: {
-      ...this.formLabelAlign  // 使用表单数据作为请求体
-    }
-  }).then(res => {  // 请求成功的回调函数
-    let resData = res.data.data;  // 获取响应数据
 
-    // 根据用户角色进行处理
-    if (resData != null) {
-      switch (resData.role) {
-        case "0":  // 管理员
-          this.$cookies.set("cname", resData.adminName);  // 设置管理员姓名
-          this.$cookies.set("cid", resData.adminId);  // 设置管理员ID
-          this.$cookies.set("role", 0);  // 设置角色为管理员
-          this.$router.push({ path: '/index' });  // 跳转到首页
-          break;
-        case "1":  // 教师
-          this.$cookies.set("cname", resData.teacherName);  // 设置教师姓名
-          this.$cookies.set("cid", resData.teacherId);  // 设置教师ID
-          this.$cookies.set("role", 1);  // 设置角色为教师
-          this.$router.push({ path: '/index' });  // 跳转到教师用户页面
-          break;
-        case "2":  // 学生
-          this.$cookies.set("cname", resData.studentName);  // 设置学生姓名
-          this.$cookies.set("cid", resData.studentId);  // 设置学生ID
-          this.$router.push({ path: '/student' });  // 跳转到学生页面
-          break;
-      }
-    }
-
-    // 处理登录失败情况
-    if (resData == null) {
-      this.$message({
-        showClose: true,
-        type: 'error',
-        message: '用户名或者密码错误'
-      });
-    }
-  });
-}
-
-\end{lstlisting}
-
-后端：
-
-\begin{lstlisting}
-@Mapper
-public interface LoginMapper {
-
-    // 查询管理员登录信息
-    @Select("select adminId, adminName, sex, tel, email, cardId, role " +
-            "from admin where adminId = #{username} and pwd = #{password}")
-    public Admin adminLogin(Integer username, String password);
-
-    // 查询教师登录信息
-    @Select("select teacherId, teacherName, institute, sex, tel, email, cardId, " +
-            "type, role from teacher where teacherId = #{username} and pwd = #{password}")
-    public Teacher teacherLogin(Integer username, String password);
-
-    // 查询学生登录信息
-    @Select("select studentId, studentName, grade, major, clazz, institute, tel, " +
-            "email, cardId, sex, role from student where studentId = #{username} and pwd = #{password}")
-    public Student studentLogin(Integer username, String password);
-}
-
-\end{lstlisting}
-
-\subsection{核心代码示例：试卷管理}
-
-\begin{lstlisting}
-@Mapper
-public interface ExamManageMapper {
-
-    // 查询所有考试信息，并返回列表
-    @Select("select * from exam_manage")
-    List<ExamManage> findAll1();
-
-    // 分页查询所有考试信息
-    @Select("select * from exam_manage")
-    IPage<ExamManage> findAll(Page page);
-
-    // 根据考试代码查询考试信息
-    @Select("select * from exam_manage where examCode = #{examCode}")
-    ExamManage findById(Integer examCode);
-
-    // 根据考试代码删除考试信息
-    @Delete("delete from exam_manage where examCode = #{examCode}")
-    int delete(Integer examCode);
-
-    // 更新考试信息
-    @Update("update exam_manage set description = #{description}, source = #{source}, paperId = #{paperId}," +
-            " examDate = #{examDate}, totalTime = #{totalTime}, grade = #{grade}, term = #{term}," +
-            " major = #{major}, institute = #{institute}, totalScore = #{totalScore}," +
-            " type = #{type}, tips = #{tips} where examCode = #{examCode}")
-    int update(ExamManage exammanage);
-
-    // 添加新的考试信息
-    @Options(useGeneratedKeys = true, keyProperty = "examCode")
-    @Insert("insert into exam_manage(description, source, paperId, examDate, totalTime, grade, term, major, institute, totalScore, type, tips)" +
-            " values(#{description}, #{source}, #{paperId}, #{examDate}, #{totalTime}, #{grade}, #{term}, #{major}, #{institute}, #{totalScore}, #{type}, #{tips})")
-    int add(ExamManage exammanage);
-
-    // 查询最后一条记录的 paperId，用于实现自增效果
-    @Select("select paperId from exam_manage order by paperId desc limit 1")
-    ExamManage findOnlyPaperId();
-}
-\end{lstlisting}
-
-\section{测试}
-
-\subsection{测试环境}
-Ubuntu 24.04 LTS
-Firefox 127.0
-
-\subsection{测试用例}
-登录测试：
-
-\begin{centering}
-\begin{longtable}{|c|m{11cm}<{\centering}|} \hline
-\textbf{输入等价类} & 账号和密码组合 \\ \hline
-\textbf{无效等价类} & 特殊字符或非法字符 \\ \hline
-\textbf{有效等价类} & “9527” “20081001”\\ \hline
-\textbf{测试结果} & 允许有效等价类中的账号和密码组合成功登录，并根据其用户权级进入对应界面 \\ \hline
-\end{longtable}
-\end{centering}
-
-查询学生测试：
-
-\begin{centering}
-\begin{longtable}{|c|m{11cm}<{\centering}|} \hline
-\textbf{输入等价类} & 鼠标点击 \\ \hline
-\textbf{无效等价类} & 对非控制模块的点击 \\ \hline
-\textbf{有效等价类} & 对登录控制模块的点击 \\ \hline
-\textbf{测试结果} & 显示学生管理页面 \\ \hline
-\end{longtable}
-\end{centering}
-
-\subsection{bug修改记录}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\linewidth]{error.png}
-\end{figure}
-错误提示表明前端应用（运行在 http://localhost:8088）试图通过 AJAX 请求向后端服务（运行在 http://localhost:8080）发送登录请求，但由于浏览器的跨域安全策略（CORS policy），请求被拒绝了，解决方案：添加 @CrossOrigin(origins = http://localhost:8088)在后端代码中配置 CORS，允许来自 http://localhost:8088 的跨域请求
-\begin{lstlisting}
-@RestController
-public class LoginController
-{
-    @Autowired
-    private LoginServiceImpl loginService;
-    @CrossOrigin(origins="http://localhost:8088")
-    @PostMapping("/login")
-    public ApiResult login(...)
-}
-\end{minted}
-\end{lstlisting}
-
-\section{软件运行效果}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{performance_1.bmp}
-\end{figure}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{performance_2.bmp}
-\end{figure}
-
-\section{设计体会}
-团队协作开发基于SpringBoot\&Vue的在线考试系统是一次非常有收获的经历。在项目中，我们不仅学习了如何有效整合后端SpringBoot和前端Vue技术，还通过详细的需求分析和系统设计，建立起清晰的开发路线和良好的团队协作模式。每位成员负责不同的模块，通过持续的沟通和协作解决了许多技术难题，同时重视质量保证和测试工作，确保了系统的稳定性和可靠性。这个过程不仅提升了我们的技术能力，还加强了团队的凝聚力和问题解决能力，为未来的项目经验积累和团队合作打下了坚实的基础
 
 \begin{thebibliography}{99}
 \bibitem{ref1}Larman C. Applying UML and Patterns: An Introduction to Object-Oriented Analysis and Design and Iterative Development[M]. 2006-5.
 \end{thebibliography}
-
 
 \end{document}
