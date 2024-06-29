@@ -9,7 +9,6 @@
   </section>
 </template>
 
-
 <style lang="less" scoped>
 .description {
   margin-left: 40px;

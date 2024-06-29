@@ -30,7 +30,45 @@
   </div>
 </template>
 
-
+<script>
+export default {
+  data() {
+    return {
+      form: {}, //保存点击以后当前试卷的信息
+      pagination: { //分页后的考试信息
+        current: 1, //当前页
+        total: null, //记录条数
+        size: 4 //每页条数
+      },
+      dialogVisible: false
+    }
+  },
+  created() {
+    this.getExamInfo()
+  },
+  methods: {
+    getExamInfo() { //分页查询所有试卷信息
+      this.$axios(`/api/exams/${this.pagination.current}/${this.pagination.size}`).then(res => {
+        this.pagination = res.data.data
+      }).catch(error => {
+      })
+    },
+    //改变当前记录条数
+    handleSizeChange(val) {
+      this.pagination.size = val
+      this.getExamInfo()
+    },
+    //改变当前页码，重新发送请求
+    handleCurrentChange(val) {
+      this.pagination.current = val
+      this.getExamInfo()
+    },
+    toPart(examCode,source) { //跳转到分段charts页面
+      this.$router.push({path: '/scorePart', query:{examCode: examCode, source: source}})
+    }
+  },
+};
+</script>
 <style lang="less" scoped>
 .exam {
   padding: 0px 40px;
