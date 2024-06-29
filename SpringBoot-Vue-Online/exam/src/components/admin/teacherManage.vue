@@ -65,7 +65,90 @@
   </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      pagination: {
+        //分页后的考试信息
+        current: 1, //当前页
+        total: null, //记录条数
+        size: 6, //每页条数
+      },
+      dialogVisible: false, //对话框
+      form: {}, //保存点击以后当前试卷的信息
+    };
+  },
+  created() {
+    this.getTeacherInfo();
+  },
+  methods: {
+    getTeacherInfo() {
+      //分页查询所有试卷信息
+      this.$axios(`/api/teachers/${this.pagination.current}/${this.pagination.size}`).then(res => {
+        this.pagination = res.data.data;
+      }).catch(error => {});
+    },
+    //改变当前记录条数
+    handleSizeChange(val) {
+      this.pagination.size = val;
+      this.getTeacherInfo();
+    },
+    //改变当前页码，重新发送请求
+    handleCurrentChange(val) {
+      this.pagination.current = val;
+      this.getTeacherInfo();
+    },
+    checkGrade(teacherId) { //修改教师信息
+      this.dialogVisible = true
+      this.$axios(`/api/teacher/${teacherId}`).then(res => {
+        this.form = res.data.data
+      })
+    },
+    deleteById(teacherId) { //删除当前学生
+      this.$confirm("确定删除当前教师吗？删除后无法恢复","Warning",{
+        confirmButtonText: '确定删除',
+        cancelButtonText: '算了,留着吧',
+        type: 'danger'
+      }).then(()=> { //确认删除
+        this.$axios({
+          url: `/api/teacher/${teacherId}`,
+          method: 'delete',
+        }).then(res => {
+          this.getTeacherInfo()
+        })
+      }).catch(() => {
 
+      })
+    },
+    submit() { //提交更改
+      this.dialogVisible = false
+      this.$axios({
+        url: '/api/teacher',
+        method: 'put',
+        data: {
+          ...this.form
+        }
+      }).then(res => {
+        console.log(res)
+        if(res.data.code ==200) {
+          this.$message({
+            message: '更新成功',
+            type: 'success'
+          })
+        }
+        this.getTeacherInfo()
+      })
+    },
+    handleClose(done) { //关闭提醒
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done();
+        }).catch(_ => {});
+    },
+  }
+};
+</script>
 <style lang="less" scoped>
 .all {
   padding: 0px 40px;
