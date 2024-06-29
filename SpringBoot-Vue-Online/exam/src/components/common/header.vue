@@ -24,6 +24,52 @@
     </el-row>
   </header>
 </template>
+
+<script>
+import {mapState,mapMutations} from 'vuex'
+export default {
+  data() {
+    return {
+      login_flag: false,
+      user: { //用户信息
+        userName: null,
+        userId: null
+      } 
+    }
+  },
+  created() {
+    this.getUserInfo()
+  },
+  computed: mapState(["flag","menu"]),
+  methods: {
+    //显示、隐藏退出按钮
+    showSetting() {
+      this.login_flag = !this.login_flag
+    },
+    //左侧栏放大缩小
+    ...mapMutations(["toggle"]),
+    getUserInfo() { //获取用户信息
+      let userName = this.$cookies.get("cname")
+      let userId = this.$cookies.get("cid")
+      this.user.userName = userName
+      this.user.userId = userId
+    },
+    index() {
+      this.$router.push({path: '/index'})
+    },
+    exit() {
+      let role = this.$cookies.get("role")
+      this.$router.push({path:"/"}) //跳转到登录页面
+      this.$cookies.remove("cname") //清除cookie
+      this.$cookies.remove("cid")
+      this.$cookies.remove("role")
+      if(role == 0) {
+        this.menu.pop()
+      }
+    }
+  },
+}
+</script>
 <style scoped>
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
