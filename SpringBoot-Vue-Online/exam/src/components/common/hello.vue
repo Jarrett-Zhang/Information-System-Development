@@ -14,7 +14,44 @@
   </section>
 </template>
 
-
+<script>
+export default {
+  data() {
+    return {
+      user: { //用户信息
+        userName: null,
+        userId: null
+      }
+    }
+  },
+  created() {
+    this.getUserInfo()
+  },
+  methods: {
+    getUserInfo() { //获取用户信息
+      let userName = this.$cookies.get("cname")
+      let userId = this.$cookies.get("cid")
+      this.user.userName = userName
+      this.user.userId = userId
+    },
+    openMsg() {
+      this.$alert('根据湘潭大学规定，计算机学院的学生将于7月1号开始实习，持续时间等待后续通知，实习期间在带队老师的安排下开展实习。','7月实习通知',{
+        confirmButtonText: '确定'
+      })
+    },
+    openMsg1() {
+      this.$alert('根据湘潭大学规定，计算机学院计算机科学与技术1班的学生将于6月18号进行软件工程的考试，具体时间等待后续通知。','18号的考试安排',{
+        confirmButtonText: '确定'
+      })
+    },
+    openMsg2() {
+      this.$alert('根据湘潭大学规定，计算机学院计算机科学与技术1班的学生将于6月18号之后进行软件设计实践的答辩，具体时间等待后续通知。','关于答辩时间安排',{
+        confirmButtonText: '确定'
+      })
+    }
+  }
+}
+</script>
 <style lang="less" scoped>
 .index {
   margin-left: 70px;
