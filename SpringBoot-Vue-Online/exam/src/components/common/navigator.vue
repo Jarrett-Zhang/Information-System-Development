@@ -9,7 +9,33 @@
   </div>
 </template>
 
-
+<script>
+import {mapState} from 'vuex'
+export default {
+  data() {
+    return {
+      active: [],
+      index1: null,
+    }
+  },
+  computed: mapState(["menu"]),
+  methods: {
+    getIndex() {
+      this.bus.$on('sendIndex',(data)=>{
+        this.index1 = data
+        this.active = this.menu[data-1]
+        // console.log(JSON.stringify(this.active)+'----')
+      })
+    }
+  },
+  created() {
+    this.getIndex()
+  },
+  beforeDestroy() {
+    // this.bus.$off('sendIndex') //销毁
+  },
+}
+</script>
 <style scoped>
 #nav .el-breadcrumb {
   height: 60px;
