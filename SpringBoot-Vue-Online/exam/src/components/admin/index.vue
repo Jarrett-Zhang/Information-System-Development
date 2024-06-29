@@ -12,6 +12,26 @@
     </section>
   </div>
 </template>
+<script>
+import header from '@/components/common/header'
+import mainLeft from '@/components/common/mainLeft'
+import navigator from '@/components/common/navigator'
+export default {
+  components:{
+    header1: header,
+    mainLeft: mainLeft,
+    navigator:navigator
+  },
+  data() {
+    return {
+      username: '许如梦'
+    }
+  },
+  methods: {
+
+  }
+}
+</script>
 <style lang="less" scoped>
 #index .nav {
   box-shadow: 1px 0 5px rgba(0, 0, 0, 0.1);
