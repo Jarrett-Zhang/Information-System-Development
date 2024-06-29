@@ -29,6 +29,50 @@
     </el-form>
   </section>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      form: { //表单数据初始化
+        studentName: null,
+        grade: null,
+        major: null,
+        clazz: null,
+        institute: null,
+        tel: null,
+        email: null,
+        pwd: null,
+        cardId: null,
+        sex: null,
+        role: 2
+      }
+    };
+  },
+  methods: {
+    onSubmit() { //数据提交
+      this.$axios({
+        url: '/api/teacher',
+        method: 'post',
+        data: {
+          ...this.form
+        }
+      }).then(res => {
+        if(res.data.code == 200) {
+          this.$message({
+            message: '数据添加成功',
+            type: 'success'
+          })
+          this.$router.push({path: '/teacherManage'})
+        }
+      })
+    },
+    cancel() { //取消按钮
+      this.form = {}
+    },
+    
+  }
+};
+</script>
 <style lang="less" scoped>
 .add {
   padding: 0px 40px;
