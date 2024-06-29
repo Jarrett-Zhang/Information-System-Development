@@ -17,6 +17,76 @@
   </div>
 </template>
 
+<script>
+  export default {
+    data() {
+      var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'));
+        } else {
+          if (this.ruleForm2.checkPass !== '') {
+            this.$refs.ruleForm2.validateField('checkPass');
+          }
+          callback();
+        }
+      };
+      var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.ruleForm2.pass) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      };
+      return {
+        ispass: true,
+        ruleForm2: {
+          pass: '',
+          checkPass: ''
+        },
+        rules2: {
+          pass: [
+            { validator: validatePass, trigger: 'blur' }
+          ],
+          checkPass: [
+            { validator: validatePass2, trigger: 'blur' }
+          ]
+        }
+      };
+    },
+    methods: {
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            let studentId = this.$cookies.get("cid")
+            this.$axios({ //修改密码
+              url: '/api/studentPWD',
+              method: 'put',
+              data: {
+                pwd: this.ruleForm2.pass,
+                studentId
+              }
+            }).then(res => {
+              if(res.data != null ) { //修改成功提示
+                this.$message({
+                  message: '密码修改成功...',
+                  type: 'success'
+                })
+              }
+            })
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+      }
+    }
+  }
+</script>
 
 <style scoped>
 #manager .pass  label{

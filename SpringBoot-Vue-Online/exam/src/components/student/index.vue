@@ -28,6 +28,53 @@
   </div>
 </template>
 
+<script>
+import myFooter from "@/components/student/myFooter"
+import {mapState} from 'vuex'
+export default {
+  components: {
+    "v-footer": myFooter
+  },
+  data() {
+    return {
+      flag: false,
+      user: {}
+    }
+  },
+  created() {
+    this.userInfo()
+  },
+  methods: {
+    exit() {  //退出登录
+      this.$router.push({path:"/"}) //跳转到登录页面
+      this.$cookies.remove("cname") //清除cookie
+      this.$cookies.remove("cid")
+    },
+    manage() {  //跳转到修改密码页面
+      this.$router.push({path: '/manager'})
+    },
+    userInfo() {
+      let studentName = this.$cookies.get("cname")
+      let studentId = this.$cookies.get("cid")
+      console.log(`studentId${studentId}`)
+      console.log(`studentName ${studentName}`)
+      this.user.userName = studentName
+      this.user.studentId = studentId
+    },
+    practice() { //跳转练习模式
+      let isPractice = true
+      this.$store.commit("practice", isPractice)
+      this.$router.push({path:'/startExam'})
+    },
+    exam() { //跳转考试模式
+     let isPractice = false
+      this.$store.commit("practice", isPractice)
+      this.$router.push({path:'/student'})
+    }
+  },
+  computed:mapState(["isPractice"])
+}
+</script>
 
 <style scoped>
 .right .icon {

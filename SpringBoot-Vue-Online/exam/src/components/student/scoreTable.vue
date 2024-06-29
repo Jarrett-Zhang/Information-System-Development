@@ -44,6 +44,70 @@
   </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      pagination: { //分页后的留言列表
+        current: 1, //当前页
+        total: null, //记录条数
+        size: 10 //每页条数
+      },
+      loading: false, //加载标识符
+      score: [], //学生成绩
+      filter: null //过滤参数
+    }
+  },
+  created() {
+    this.getScore()
+    this.loading = true //数据加载则遮罩表格
+  },
+  methods: {
+    getScore() {
+      let studentId = this.$cookies.get("cid")
+      this.$axios(`/api/score/${this.pagination.current}/${this.pagination.size}/${studentId}`).then(res => {
+        if(res.data.code == 200) {
+          this.loading = false //数据加载完成去掉遮罩
+          this.score = res.data.data.records
+          this.pagination = {...res.data.data}
+          let mapVal = this.score.map((element,index) => { //通过map得到 filter:[{text,value}]形式的数组对象
+            let newVal = {}
+            newVal.text = element.answerDate
+            newVal.value = element.answerDate
+            return newVal
+          })
+          let hash = []
+          const newArr = mapVal.reduce((item, next) => { //对新对象进行去重操作
+            hash[next.text] ? '' : hash[next.text] = true && item.push(next);
+            return item
+          }, []);
+          this.filter = newArr
+        }
+      })
+    },
+    //改变当前记录条数
+    handleSizeChange(val) {
+      this.pagination.size = val
+      this.getScore()
+    },
+    //改变当前页码，重新发送请求
+    handleCurrentChange(val) {
+      this.pagination.current = val
+      this.getScore()
+    },
+    formatter(row, column) {
+      return row.address;
+    },
+    filterTag(value, row) {
+      return row.tag === value;
+    },
+    filterHandler(value, row, column) {
+      const property = column["property"];
+      return row[property] === value;
+    }
+  }
+};
+</script>
 
 <style lang="less" scoped>
 .pagination {

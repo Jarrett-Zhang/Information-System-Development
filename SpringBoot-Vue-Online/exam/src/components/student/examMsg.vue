@@ -86,6 +86,55 @@
   </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      dialogVisible: false, //对话框属性
+      activeName: '0',  //默认打开序号
+      topicCount: [],//每种类型题目的总数
+      score: [],  //每种类型分数的总数
+      examData: { //考试信息
+        // source: null,
+        // totalScore: null,
+      },
+      topic: {  //试卷信息
+
+      },
+    }
+  },
+  mounted() {
+    this.init()
+  },
+  methods: {
+    //初始化页面数据
+    init() {
+      let examCode = this.$route.query.examCode //获取路由传递过来的试卷编号
+      this.$axios(`/api/exam/${examCode}`).then(res => {  //通过examCode请求试卷详细信息
+        res.data.data.examDate = res.data.data.examDate.substr(0,10)
+        this.examData = { ...res.data.data}
+        let paperId = this.examData.paperId
+        this.$axios(`/api/paper/${paperId}`).then(res => {  //通过paperId获取试题题目信息
+          this.topic = {...res.data}
+          let keys = Object.keys(this.topic) //对象转数组
+          keys.forEach(e => {
+            let data = this.topic[e]
+            this.topicCount.push(data.length)
+            let currentScore = 0
+            for(let i = 0; i< data.length; i++) { //循环每种题型,计算出总分
+              currentScore += data[i].score
+            }
+            this.score.push(currentScore) //把每种题型总分存入score
+          })
+        })
+      })
+    },
+    toAnswer(id) {
+      this.$router.push({path:"/answer",query:{examCode: id}})
+    },
+  }
+}
+</script>
 
 <style lang="less" scoped>
 .bottom {

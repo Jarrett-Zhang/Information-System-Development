@@ -31,6 +31,45 @@
   </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      isTransition: false, //是否渲染完成
+      score: 0, //总分
+      imgShow: false, //不及格图片显示
+      imgSrc: {
+        fail1: require("@/assets/img/cry1.gif"),
+        fail2: require('@/assets/img/cry2.jpg'),
+        pass1: require('@/assets/img/good1.jpg'),
+        pass2: require('@/assets/img/good2.gif')
+      },
+      startTime: null, //考试开始时间
+      endTime: null, //考试结束时间
+    }
+  },
+  created() {
+    this.transiton()
+    this.getScore()
+  },
+  methods: {
+    transiton() {  //一秒后过渡
+      setTimeout(() => {
+        this.isTransition = true
+        this.imgShow = true
+      },1000)
+    },
+    getScore() {
+      let score = this.$route.query.score
+      let startTime = this.$route.query.startTime
+      let endTime = this.$route.query.endTime
+      this.score = score
+      this.startTime = startTime
+      this.endTime = endTime
+    }
+  }
+}
+</script>
 
 <style lang="less" scoped>
 .show {
@@ -142,3 +181,4 @@
   }
 }
 </style>
+
