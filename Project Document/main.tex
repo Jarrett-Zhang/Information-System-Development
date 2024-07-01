@@ -43,7 +43,7 @@
 \begin{titlepage}
     \newgeometry{top=6cm}
     \begin{center}
-        \bfseries\Huge{项目计划书}\\
+        \bfseries\Huge{软件说明书}\\
         \vspace{0.5cm}
         \bfseries\Large{基于SpringBoot\&Vue的在线考试系统}
         \vspace{5cm}
@@ -82,14 +82,14 @@
 \begin{center}
 \begin{tabular}{c|c}
 胡翌晨 & 前/后端代码实现\\
-张家瑞 & 系统设计、文档编写、项目测试\\
+张家瑞 & 需求分析、系统设计、项目测试\\
 刁坤明 & SpringBoot开发\\
 文鑫 & Vue开发\\
 周书法 & UI/UX设计、项目测试\\
 \end{tabular}
 \end{center}
 
-\subsection{预期进度安排}
+\subsection{工作进度}
 \begin{center}
 \begin{tabular}{c|c}
 2024.6.18 & 确认选题\\
@@ -344,6 +344,37 @@
 
 \section{系统设计}
 
+\subsection{操作契约}
+\begin{itemize}
+    \item \textbf{操作}:登录\\
+        \textbf{参数}：账号（String）、密码（String）\\
+        \textbf{交叉引用}：用例"登录"\\
+        \textbf{前置条件}：无\\
+        \textbf{后置条件}：
+        \begin{itemize}
+            \item 如果用户名和密码匹配且通过验证，则用户成功登录系统
+            \item 如果验证失败（用户名不存在或密码不正确），系统将给出相应的错误提示
+        \end{itemize}
+    \item \textbf{操作}：查询\\
+        \textbf{参数}：ID（int）\\
+        \textbf{交叉引用}：用例"查询学生/题目/考试"\\
+        \textbf{前置条件}：所查ID必须存在于系统中\\
+        \textbf{后置条件}：
+        \begin{itemize}
+            \item 系统根据ID查询并返回对应信息
+            \item 如果找不到该ID对应的数据，则返回空结果或相应的提示信息
+        \end{itemize}
+    \item \textbf{操作}：添加\\
+        \textbf{参数}：添加项目信息\\
+        \textbf{交叉引用}：用例"添加学生/题目/考试"\\
+        \textbf{前置条件}：无\\
+        \textbf{后置条件}：
+        \begin{itemize}
+            \item 在数据库中成功创建新的项目，并保存其信息
+            \item 如果操作失败，系统将给出相应的错误提示
+        \end{itemize}
+\end{itemize}
+
 \subsection{系统时序图}
 \begin{comment}
 sequenceDiagram
@@ -375,7 +406,7 @@ Controller-->>View:判断是否成功
 \end{comment}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\linewidth]{diagram.png}
+    \includegraphics[width=0.95\linewidth]{sequence diagram.png}
 \end{figure}
 
 \subsection{包图}
@@ -389,37 +420,6 @@ Controller-->>View:判断是否成功
     \centering
     \includegraphics[width=0.8\linewidth]{class diagram.png}
 \end{figure}
-
-\subsection{操作契约}
-\begin{itemize}
-    \item \textbf{操作}:登录\\
-        \textbf{参数}：账号（String）、密码（String）\\
-        \textbf{交叉引用}：用例"登录"\\
-        \textbf{前置条件}：无\\
-        \textbf{后置条件}：
-        \begin{itemize}
-            \item 如果用户名和密码匹配且通过验证，则用户成功登录系统
-            \item 如果验证失败（用户名不存在或密码不正确），系统将给出相应的错误提示
-        \end{itemize}
-    \item \textbf{操作}：查询\\
-        \textbf{参数}：ID（int）\\
-        \textbf{交叉引用}：用例"查询学生/题目/考试"\\
-        \textbf{前置条件}：所查ID必须存在于系统中\\
-        \textbf{后置条件}：
-        \begin{itemize}
-            \item 系统根据ID查询并返回对应信息
-            \item 如果找不到该ID对应的数据，则返回空结果或相应的提示信息
-        \end{itemize}
-    \item \textbf{操作}：添加\\
-        \textbf{参数}：添加项目信息\\
-        \textbf{交叉引用}：用例"添加学生/题目/考试"\\
-        \textbf{前置条件}：无\\
-        \textbf{后置条件}：
-        \begin{itemize}
-            \item 在数据库中成功创建新的项目，并保存其信息
-            \item 如果操作失败，系统将给出相应的错误提示
-        \end{itemize}
-\end{itemize}
 
 \subsection{逻辑分层}
 \begin{enumerate}
@@ -476,27 +476,211 @@ Controller-->>View:判断是否成功
         \item 负责处理数据库连接、事务管理、数据检索和更新等操作。
         \end{itemize}
 \end{enumerate}
+\subsection{数据库设计}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{database design.png}
+\end{figure}
 
-\newpage
+
 \section{代码实现}
 
-\subsection{拟采用的实现技术}
-\begin{itemize}
-    \item \textbf{后端开发}：SpringBoot是一个基于Java的全功能Web应用框架，采用SpringBoot可以快速创建可独立运行的生产级应用程序；SpringBoot简化了Spring框架的配置过程，可以快速搭建项目结构，提高开发效率
-    \item \textbf{前端开发}：Vue.js是一个渐进式JavaScript框架，用于构建前端应用；Vue.js提供了响应式数据绑定和可组合的视图组件，易于上手和扩展，可以配合多种开发工具和框架
-    \item \textbf{数据库}：MySQL可以作为考试系统的数据库，用于存储考试题目、用户信息、考试记录、成绩等数据；采用关系型数据库便于建立数据之间的关联关系，方便数据的查询和统计
-    \item \textbf{消息队列}：ActiveMQ可以实现系统各组件之间的异步通信，提高系统性能和可扩展性。
-    \item \textbf{安全认证}：OAuth可以实现第三方账号登录功能，为用户提供更方便的登录方式。
-    \item \textbf{API管理}：Apigee可以为在线考试系统提供API文档管理，方便开发人员快速接入和调用系统API
-    \item \textbf{缓存技术}：Redis可以用来缓存系统中频繁访问的数据，减少对数据库的访问，提高系统性能
-    \item \textbf{监控和日志}：Prometheus可以用来监控系统性能和日志管理，方便快速定位问题和系统优化
-\end{itemize}
+\subsection{核心代码示例：登录}
 
+前端：
+\lstset{language=java}
+\begin{lstlisting}
+login() {
+  console.log("登录操作执行-------"); // 打印登录操作执行信息
 
+  // 发送登录请求
+  this.$axios({
+    url: `http://localhost:8080/login/`,
+    method: 'post',
+    data: {
+      ...this.formLabelAlign  // 使用表单数据作为请求体
+    }
+  }).then(res => {  // 请求成功的回调函数
+    let resData = res.data.data;  // 获取响应数据
 
+    // 根据用户角色进行处理
+    if (resData != null) {
+      switch (resData.role) {
+        case "0":  // 管理员
+          this.$cookies.set("cname", resData.adminName);  // 设置管理员姓名
+          this.$cookies.set("cid", resData.adminId);  // 设置管理员ID
+          this.$cookies.set("role", 0);  // 设置角色为管理员
+          this.$router.push({ path: '/index' });  // 跳转到首页
+          break;
+        case "1":  // 教师
+          this.$cookies.set("cname", resData.teacherName);  // 设置教师姓名
+          this.$cookies.set("cid", resData.teacherId);  // 设置教师ID
+          this.$cookies.set("role", 1);  // 设置角色为教师
+          this.$router.push({ path: '/index' });  // 跳转到教师用户页面
+          break;
+        case "2":  // 学生
+          this.$cookies.set("cname", resData.studentName);  // 设置学生姓名
+          this.$cookies.set("cid", resData.studentId);  // 设置学生ID
+          this.$router.push({ path: '/student' });  // 跳转到学生页面
+          break;
+      }
+    }
+
+    // 处理登录失败情况
+    if (resData == null) {
+      this.$message({
+        showClose: true,
+        type: 'error',
+        message: '用户名或者密码错误'
+      });
+    }
+  });
+}
+
+\end{lstlisting}
+
+后端：
+
+\begin{lstlisting}
+@Mapper
+public interface LoginMapper {
+
+    // 查询管理员登录信息
+    @Select("select adminId, adminName, sex, tel, email, cardId, role " +
+            "from admin where adminId = #{username} and pwd = #{password}")
+    public Admin adminLogin(Integer username, String password);
+
+    // 查询教师登录信息
+    @Select("select teacherId, teacherName, institute, sex, tel, email, cardId, " +
+            "type, role from teacher where teacherId = #{username} and pwd = #{password}")
+    public Teacher teacherLogin(Integer username, String password);
+
+    // 查询学生登录信息
+    @Select("select studentId, studentName, grade, major, clazz, institute, tel, " +
+            "email, cardId, sex, role from student where studentId = #{username} and pwd = #{password}")
+    public Student studentLogin(Integer username, String password);
+}
+
+\end{lstlisting}
+
+\subsection{核心代码示例：试卷管理}
+
+\begin{lstlisting}
+@Mapper
+public interface ExamManageMapper {
+
+    // 查询所有考试信息，并返回列表
+    @Select("select * from exam_manage")
+    List<ExamManage> findAll1();
+
+    // 分页查询所有考试信息
+    @Select("select * from exam_manage")
+    IPage<ExamManage> findAll(Page page);
+
+    // 根据考试代码查询考试信息
+    @Select("select * from exam_manage where examCode = #{examCode}")
+    ExamManage findById(Integer examCode);
+
+    // 根据考试代码删除考试信息
+    @Delete("delete from exam_manage where examCode = #{examCode}")
+    int delete(Integer examCode);
+
+    // 更新考试信息
+    @Update("update exam_manage set description = #{description}, source = #{source}, paperId = #{paperId}," +
+            " examDate = #{examDate}, totalTime = #{totalTime}, grade = #{grade}, term = #{term}," +
+            " major = #{major}, institute = #{institute}, totalScore = #{totalScore}," +
+            " type = #{type}, tips = #{tips} where examCode = #{examCode}")
+    int update(ExamManage exammanage);
+
+    // 添加新的考试信息
+    @Options(useGeneratedKeys = true, keyProperty = "examCode")
+    @Insert("insert into exam_manage(description, source, paperId, examDate, totalTime, grade, term, major, institute, totalScore, type, tips)" +
+            " values(#{description}, #{source}, #{paperId}, #{examDate}, #{totalTime}, #{grade}, #{term}, #{major}, #{institute}, #{totalScore}, #{type}, #{tips})")
+    int add(ExamManage exammanage);
+
+    // 查询最后一条记录的 paperId，用于实现自增效果
+    @Select("select paperId from exam_manage order by paperId desc limit 1")
+    ExamManage findOnlyPaperId();
+}
+\end{lstlisting}
+
+\section{测试}
+
+\subsection{测试环境}
+Ubuntu 24.04 LTS
+Firefox 127.0
+
+\subsection{测试用例}
+登录测试：
+
+\begin{centering}
+\begin{longtable}{|c|m{11cm}<{\centering}|} \hline
+\textbf{输入等价类} & 账号和密码组合 \\ \hline
+\textbf{无效等价类} & 特殊字符或非法字符 \\ \hline
+\textbf{有效等价类} & “9527” “20081001”\\ \hline
+\textbf{测试结果} & 允许有效等价类中的账号和密码组合成功登录，并根据其用户权级进入对应界面 \\ \hline
+\end{longtable}
+\end{centering}
+
+查询学生测试：
+
+\begin{centering}
+\begin{longtable}{|c|m{11cm}<{\centering}|} \hline
+\textbf{输入等价类} & 鼠标点击 \\ \hline
+\textbf{无效等价类} & 对非控制模块的点击 \\ \hline
+\textbf{有效等价类} & 对登录控制模块的点击 \\ \hline
+\textbf{测试结果} & 显示学生管理页面 \\ \hline
+\end{longtable}
+\end{centering}
+
+\subsection{bug修改记录}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{error.png}
+\end{figure}
+错误提示表明前端应用（运行在 http://localhost:8088）试图通过 AJAX 请求向后端服务（运行在 http://localhost:8080）发送登录请求，但由于浏览器的跨域安全策略（CORS policy），请求被拒绝了，解决方案：添加 @CrossOrigin(origins = http://localhost:8088)在后端代码中配置 CORS，允许来自 http://localhost:8088 的跨域请求
+\begin{lstlisting}
+@RestController
+public class LoginController
+{
+    @Autowired
+    private LoginServiceImpl loginService;
+    @CrossOrigin(origins="http://localhost:8088")
+    @PostMapping("/login")
+    public ApiResult login(...)
+}
+\end{minted}
+\end{lstlisting}
+
+\section{软件运行效果}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{performance (1).png}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{performance (2).png}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{performance (3).png}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{performance (4).png}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{performance (5).png}
+\end{figure}
+
+\section{设计体会}
+团队协作开发基于SpringBoot\&Vue的在线考试系统是一次非常有收获的经历。在项目中，我们不仅学习了如何有效整合后端SpringBoot和前端Vue技术，还通过详细的需求分析和系统设计，建立起清晰的开发路线和良好的团队协作模式。每位成员负责不同的模块，通过持续的沟通和协作解决了许多技术难题，同时重视质量保证和测试工作，确保了系统的稳定性和可靠性。这个过程不仅提升了我们的技术能力，还加强了团队的凝聚力和问题解决能力，为未来的项目经验积累和团队合作打下了坚实的基础
 
 \begin{thebibliography}{99}
 \bibitem{ref1}Larman C. Applying UML and Patterns: An Introduction to Object-Oriented Analysis and Design and Iterative Development[M]. 2006-5.
 \end{thebibliography}
+
 
 \end{document}
